@@ -117,7 +117,7 @@
     <color name="primary_background">#1e1e1e</color>
     <color name="secondary_background">#292929</color>
     <color name="tertiary_background">#292929</color>
-    <color name="prompt_background">#202020</color>
+    <color name="prompt_background">#1E1C41</color>
     <color name="prompt_input">#f8f7fc</color>
     <color name="button_gradient_start_color">#FF5193</color>
     <color name="button_gradient_end_color">#F29500</color>
