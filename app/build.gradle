@@ -73,7 +73,8 @@ android {
     flavorDimensions "mode"
     productFlavors {
         brd {
-            applicationId = "com.breadwallet"
+            manifestPlaceholders = [applicationIcon: "@mipmap/ic_cs_launcher_white"]
+            applicationId = "cash.just"
             dimension "mode"
             resValue "string", "app_name", "BRD"
             buildConfigField "boolean", "BITCOIN_TESTNET", "false"
@@ -81,7 +82,8 @@ android {
             missingDimensionStrategy 'network', 'onMainnet'
         }
         brdTestnet {
-            applicationId = "com.breadwallet.testnet"
+            manifestPlaceholders = [applicationIcon: "@mipmap/ic_cs_launcher_testnet"]
+            applicationId = "cash.just.testnet"
             dimension "mode"
             resValue "string", "app_name", "BRD Testnet"
             buildConfigField "boolean", "BITCOIN_TESTNET", "true"
@@ -106,7 +108,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.FakeSigningConfig
-            manifestPlaceholders = [applicationIcon: "@mipmap/ic_launcher"]
             debuggable = false
             minifyEnabled = false
             buildConfigField "boolean", "IS_INTERNAL_BUILD", "false"
@@ -120,7 +121,6 @@ android {
         debug {
             signingConfig signingConfigs.FakeSigningConfig
             applicationIdSuffix '.debug'
-            manifestPlaceholders = [applicationIcon: "@mipmap/ic_launcher_grayscale"]
             debuggable = true
             jniDebuggable = true
             minifyEnabled = false

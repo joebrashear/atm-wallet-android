@@ -17,6 +17,7 @@
 
     <com.breadwallet.legacy.presenter.customviews.BaseTextView
         android:id="@+id/brd_rewards"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="40dp"
@@ -37,6 +38,7 @@
         android:fontFamily="@font/mobile_font_book" />
 
     <View
+        android:visibility="invisible"
         android:id="@+id/divider4"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -53,6 +55,7 @@
 
     <com.breadwallet.legacy.presenter.customviews.BaseTextView
         android:id="@+id/brd_copy"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="12dp"
@@ -71,7 +74,7 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:gravity="center_horizontal"
-        android:src="@drawable/brd_logo_gradient"
+        android:src="@drawable/cs_logo_with_text"
         android:textColor="@color/white"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -109,6 +112,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
+        android:visibility="invisible"
         android:id="@+id/view4"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -124,6 +128,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
+        android:visibility="invisible"
         android:id="@+id/view5"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -150,6 +155,7 @@
 
     <com.breadwallet.legacy.presenter.customviews.BaseTextView
         android:id="@+id/textView24"
+        android:visibility="invisible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
@@ -170,6 +176,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView22" />
 
     <ImageView
+        android:visibility="invisible"
         android:id="@+id/blog_share_button"
         android:layout_width="16dp"
         android:layout_height="16dp"
@@ -220,12 +227,14 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
         android:text="@string/About.reddit"
+        android:visibility="gone"
         android:textSize="18sp"
         android:fontFamily="@font/mobile_font_book"
         app:layout_constraintBottom_toTopOf="@+id/divider1"
         app:layout_constraintLeft_toLeftOf="@+id/divider1" />
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/reddit_share_button"
         android:layout_width="16dp"
         android:layout_height="16dp"
