@@ -9,12 +9,12 @@
 
     <View
         android:id="@+id/logo_view"
-        android:layout_width="96dp"
-        android:layout_height="32dp"
+        android:layout_width="153dp"
+        android:layout_height="96dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="128dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/brd_logo_gradient"
+        android:background="@drawable/cs_logo_with_text"
         app:layout_constraintLeft_toLeftOf="parent"
         android:elevation="5dp"
         app:layout_constraintRight_toRightOf="parent"
