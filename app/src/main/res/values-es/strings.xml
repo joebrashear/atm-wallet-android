@@ -466,7 +466,7 @@
     <!-- Onboarding screen Page 4 title -->
     <string name="OnboardingPageFour.title">¡Comienza a invertir hoy mismo desde solo 50 $!</string>
     <!-- Onboarding screen Page 1 title -->
-    <string name="OnboardingPageOne.title">¡Bienvenido a su nueva billetera que activa los monedas virtuales en los ATMS!</string>
+    <string name="OnboardingPageOne.title">¡Bienvenido a su billetera de moneda virtual habilitada para cajeros automáticos!</string>
     <!-- Onboarding screen Page 3 subtitle -->
     <string name="OnboardingPageThree.subtitle">Invierte y diversifica con Coinsquare de forma segura y sencilla.</string>
     <!-- Onboarding screen Page 3 title -->
