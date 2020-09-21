@@ -447,7 +447,7 @@
     <!-- Node Selector view title -->
     <string name="NodeSelector.title">Bitcoin Nodes</string>
     <!-- Onboarding screen 'I'll browse first' button -->
-    <string name="Onboarding.browseFirst">I\'ll browse first</string>
+    <string name="Onboarding.browseFirst">Continue</string>
     <!-- Onboarding screen 'Buy some coin' button -->
     <string name="Onboarding.buyCoin">Buy some coin</string>
     <!-- Onboarding screen 'Get started' (create new wallet) button -->
