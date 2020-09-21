@@ -466,7 +466,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
         HTTPServer.getInstance().startServer(this)
         apiClient.updatePlatform()
         applicationScope.launch {
-            UserMetricsUtil.makeUserMetricsRequest(context)
+            // UserMetricsUtil.makeUserMetricsRequest(context)
         }
 
         startedScope.launch {
