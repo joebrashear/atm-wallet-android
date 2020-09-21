@@ -24,6 +24,9 @@
  */
 package com.breadwallet.ui.navigation
 
+import cash.just.support.CashSupport
+import cash.just.support.pages.GeneralSupportPage
+import cash.just.ui.CashUI
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.ControllerChangeHandler
 import com.bluelinelabs.conductor.Router
@@ -247,12 +250,21 @@ class RouterNavigator(
     }
 
     override fun supportPage(effect: NavigationTarget.SupportPage) {
-        router.pushController(
-            WebController(effect.asSupportUrl()).asTransaction(
-                BottomSheetChangeHandler(),
-                BottomSheetChangeHandler()
-            )
-        )
+        router.fragmentManager()?.let {
+            when(effect.articleId) {
+                BRConstants.FAQ_SET_PIN -> {
+                    CashUI.showSupportPage(CashSupport.Builder().detail(GeneralSupportPage.PIN), it)
+                }
+                BRConstants.FAQ_IMPORT_WALLET -> {
+                    CashUI.showSupportPage(CashSupport.Builder().detail(GeneralSupportPage.IMPORT_WALLET), it)
+                }
+                BRConstants.FAQ_PAPER_KEY -> {
+                    CashUI.showSupportPage(CashSupport.Builder().detail(GeneralSupportPage.RECOVERY_KEY), it)
+                } else -> {
+                    CashUI.showSupportPage(CashSupport.Builder(), it)
+                }
+            }
+        }
     }
 
     override fun setPin(effect: NavigationTarget.SetPin) {

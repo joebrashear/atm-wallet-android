@@ -34,7 +34,7 @@
                 android:layout_width="120dp"
                 android:layout_height="70dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/brd_logo_gradient" />
+                android:src="@drawable/cs_logo_with_text" />
 
             <com.breadwallet.legacy.presenter.customviews.BaseTextView
                 android:id="@+id/subtitle"
@@ -42,9 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/brd_logo"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="-16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/LinkWallet.logoFooter"
-                android:textColor="?attr/link_wallet_subtitle_text_color"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:fontFamily="@font/mobile_font_bold" />
 

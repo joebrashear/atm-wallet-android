@@ -96,7 +96,7 @@ class OnBoardingController(
 
     override fun M.render() {
         ifChanged(M::page) { page ->
-            listOf(indicator1, indicator2, indicator3)
+            listOf(indicator1, indicator2)
                 .forEachIndexed { index, indicator ->
                     indicator.background = when (page) {
                         index + 1 -> activeIndicator
@@ -121,15 +121,15 @@ class OnBoardingController(
             if (!router.hasRootController()) {
                 val root = when (position) {
                     0 -> PageOneController()
-                    1 -> PageTwoController()
-                    2 -> PageThreeController()
+                    // 1 -> PageTwoController()
+                    1 -> PageThreeController()
                     else -> error("Unknown position")
                 }
                 router.setRoot(RouterTransaction.with(root))
             }
         }
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 2
     }
 
     override fun handleBack() = currentModel.isLoading
@@ -164,7 +164,7 @@ class PageThreeController(args: Bundle? = null) : BaseController(args) {
         val onBoardingController = (parentController as OnBoardingController)
 
         last_screen_title.isVisible = true
-        button_buy.isVisible = true
+        button_buy.isVisible = false
         button_browse.isVisible = true
         primary_text.isVisible = false
         secondary_text.isVisible = false

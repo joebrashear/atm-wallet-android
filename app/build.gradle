@@ -25,8 +25,8 @@ android {
     ext {
         brdMarketingVersion = 4   // Major version. Usually affected by marketing. Maximum value: 99
         brdProductVersion = 4    // Minor version. Usually affected by product. Maximum value: 99
-        brdEngineeringVersion = 4 // Hot fix version. Usually affected by engineering. Maximum value: 9
-        brdBuildVersion = 13       // Build version. Increase for each new build. Maximum value: 999
+        brdEngineeringVersion = 5 // Hot fix version. Usually affected by engineering. Maximum value: 9
+        brdBuildVersion = 14      // Build version. Increase for each new build. Maximum value: 999
 
         // The version code must be monotonically increasing. It is used by Android to maintain upgrade/downgrade
         // relationship between builds with a max value of 2 100 000 000.
@@ -39,7 +39,7 @@ android {
     }
     defaultConfig {
         applicationId = 'com.breadwallet'
-        minSdkVersion 23
+        minSdkVersion 24
         targetSdkVersion 29
 
         versionCode brdVersionCode
@@ -51,6 +51,7 @@ android {
 
         testInstrumentationRunner = 'androidx.test.runner.AndroidJUnitRunner'
         testInstrumentationRunnerArguments clearPackageData: 'true'
+        resConfigs "en", "es", "fr"
     }
     signingConfigs {
         FakeSigningConfig {
@@ -73,15 +74,18 @@ android {
     flavorDimensions "mode"
     productFlavors {
         brd {
-            applicationId = "com.breadwallet"
+            manifestPlaceholders = [applicationIcon: "@mipmap/ic_cs_launcher_white"]
+            applicationId = "cash.just"
             dimension "mode"
-            resValue "string", "app_name", "BRD"
+            resValue "string", "app_name", "Coinsquare Wallet"
             buildConfigField "boolean", "BITCOIN_TESTNET", "false"
             // Uncomment to fake sign a mainnet release build for testing.
             missingDimensionStrategy 'network', 'onMainnet'
         }
         brdTestnet {
-            applicationId = "com.breadwallet.testnet"
+            resValue "string", "app_name", "Coinsquare Wallet Tesnet"
+            manifestPlaceholders = [applicationIcon: "@mipmap/ic_cs_launcher_testnet"]
+            applicationId = "cash.just.testnet"
             dimension "mode"
             resValue "string", "app_name", "BRD Testnet"
             buildConfigField "boolean", "BITCOIN_TESTNET", "true"
@@ -106,7 +110,6 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.FakeSigningConfig
-            manifestPlaceholders = [applicationIcon: "@mipmap/ic_launcher"]
             debuggable = false
             minifyEnabled = false
             buildConfigField "boolean", "IS_INTERNAL_BUILD", "false"
@@ -120,7 +123,6 @@ android {
         debug {
             signingConfig signingConfigs.FakeSigningConfig
             applicationIdSuffix '.debug'
-            manifestPlaceholders = [applicationIcon: "@mipmap/ic_launcher_grayscale"]
             debuggable = true
             jniDebuggable = true
             minifyEnabled = false
@@ -324,4 +326,7 @@ dependencies {
     compileOnly "io.sweers.redacted:redacted-compiler-plugin-annotation:$redacted_version"
 
     detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+
+    implementation 'com.github.atmcoin:cash-ui-android:2.0.6'
+    implementation project(":CashOverride")
 }
