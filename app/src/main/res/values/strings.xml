@@ -593,7 +593,7 @@
     <!-- Enter paper key instruction -->
     <string name="RecoverWallet.instruction">Enter Recovery Phrase</string>
     <!-- Recover wallet intro -->
-    <string name="RecoverWallet.intro">Recover your BRD with your paper key.</string>
+    <string name="RecoverWallet.intro">Recover your Coinsquare wallet with your recovery phrase.</string>
     <!-- Invalid paper key message -->
     <string name="RecoverWallet.invalid">The paper key you entered is invalid. Please double-check each word and try again.</string>
     <!-- Previous button accessibility label -->
@@ -996,7 +996,7 @@
     <!-- Touch ID unavailable alert title -->
     <string name="TouchIdSettings.unavailableAlertTitle">Touch ID Not Set Up</string>
     <!-- Text label for the toggle that enables Touch ID for unlocking the BRD app. -->
-    <string name="TouchIdSettings.unlockTitleText">Enable Touch ID to unlock BRD</string>
+    <string name="TouchIdSettings.unlockTitleText">Enable Touch ID to unlock Coisnquare</string>
     <!-- Always require passcode option -->
     <string name="TouchIdSpendingLimit">Always require passcode</string>
     <!-- Touch ID spending limit screen body -->
