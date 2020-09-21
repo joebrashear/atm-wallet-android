@@ -459,7 +459,7 @@
     <!-- Onboarding screen Skip button title that allows the user to exit the onboarding process. -->
     <string name="Onboarding.skip">Skip</string>
     <!-- Onboarding screen Page 4 title -->
-    <string name="OnboardingPageFour.title">Start investing today with as little as $50!</string>
+    <string name="OnboardingPageFour.title">Welcome to Coinsquare Networks!</string>
     <!-- Onboarding screen Page 1 title -->
     <string name="OnboardingPageOne.title">Welcome to your ATM enabled virtual currency wallet!</string>
     <!-- Onboarding screen Page 3 subtitle -->
@@ -467,9 +467,9 @@
     <!-- Onboarding screen Page 3 title -->
     <string name="OnboardingPageThree.title">Buy and trade bitcoin, tokens, and other digital currencies.</string>
     <!-- Onboarding screen Page 2 subtitle -->
-    <string name="OnboardingPageTwo.subtitle">We have over $6 billion USD worth of assets under protection.</string>
+    <string name="OnboardingPageTwo.subtitle">Our wallet is open source and fully compatible with any other wallet.</string>
     <!-- Onboarding screen Page 2 title -->
-    <string name="OnboardingPageTwo.title">Sell your Bitcoin and Receive Cash at our ATM!</string>
+    <string name="OnboardingPageTwo.title">Direct cash redemption of crypto at thousands of ATMs.</string>
     <!-- Eg. Send 1.0Eth to purchase CCC -->
     <string name="PaymentConfirmation.amountText">Send %1$s to purchase %2$s</string>
     <!-- Payment confirmation view title -->

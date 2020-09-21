@@ -489,7 +489,7 @@
     <!-- Onboarding screen Skip button title that allows the user to exit the onboarding process. -->
     <string name="Onboarding.skip">Passer</string>
     <!-- Onboarding screen Page 4 title -->
-    <string name="OnboardingPageFour.title">Commencez à investir dès aujourd\'hui avec seulement 50 $ !</string>
+    <string name="OnboardingPageFour.title">Bienvenue sur Coinsquare Networks!</string>
     <!-- Onboarding screen Page 1 title -->
     <string name="OnboardingPageOne.title">Bienvenue dans votre portefeuille de monnaie virtuelle compatible ATM!</string>
     <!-- Onboarding screen Page 3 subtitle -->
@@ -497,9 +497,9 @@
     <!-- Onboarding screen Page 3 title -->
     <string name="OnboardingPageThree.title">Achetez et vendez des bitcoins, des tokens, et d\'autres monnaies électroniques.</string>
     <!-- Onboarding screen Page 2 subtitle -->
-    <string name="OnboardingPageTwo.subtitle">Nous avons sous protection des actifs valant plus de 6 millions de dollars US.</string>
+    <string name="OnboardingPageTwo.subtitle">Notre portefeuille est open source et entièrement compatible avec tout autre portefeuille.</string>
     <!-- Onboarding screen Page 2 title -->
-    <string name="OnboardingPageTwo.title">Vendez vos Bitcoins et recevez de l\'argent à notre guichet automatique!</string>
+    <string name="OnboardingPageTwo.title">Rachat en espèces direct de crypto à des milliers de guichets automatiques.</string>
     <!-- Eg. Send 1.0Eth to purchase CCC -->
     <string name="PaymentConfirmation.amountText">Envoyer %1$s pour acheter %2$s</string>
     <!-- Payment confirmation view title -->

@@ -121,15 +121,15 @@ class OnBoardingController(
             if (!router.hasRootController()) {
                 val root = when (position) {
                     0 -> PageOneController()
-                    1 -> PageTwoController()
-                    2 -> PageThreeController()
+                    // 1 -> PageTwoController()
+                    1 -> PageThreeController()
                     else -> error("Unknown position")
                 }
                 router.setRoot(RouterTransaction.with(root))
             }
         }
 
-        override fun getCount(): Int = 3
+        override fun getCount(): Int = 2
     }
 
     override fun handleBack() = currentModel.isLoading
