@@ -9,6 +9,7 @@ apply plugin: 'com.google.protobuf'
 apply plugin: 'io.sweers.redacted.redacted-plugin'
 apply from: file("../gradle/google-services.gradle")
 apply from: file("../gradle/copy-font-files.gradle")
+apply from: rootProject.file("jacoco.gradle")
 
 redactedPlugin {
     replacementString = '***'
@@ -17,6 +18,10 @@ redactedPlugin {
 detekt {
     toolVersion = "1.0.1"
     input = files("src/main/java", "src/test/java")
+}
+
+sonarqube {
+    androidVariant 'brdTestnetDebug'
 }
 
 android {
