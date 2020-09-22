@@ -25,6 +25,10 @@ buildscript {
     }
 }
 
+plugins {
+    id("org.sonarqube") version "$sonar_version"
+}
+
 allprojects {
     repositories {
         exclusiveContent {
