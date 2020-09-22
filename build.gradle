@@ -21,7 +21,12 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.google.firebase:firebase-appdistribution-gradle:$firebase_distribution_version"
         classpath "com.google.firebase:firebase-crashlytics-gradle:$firebase_crashlytics_gradle_version"
+        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
     }
+}
+
+plugins {
+    id("org.sonarqube") version "$sonar_version"
 }
 
 allprojects {
