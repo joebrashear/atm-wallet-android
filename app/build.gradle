@@ -1,5 +1,6 @@
 plugins {
-    id("io.gitlab.arturbosch.detekt") version "$detekt_version"
+    id("io.gitlab.arturbosch.detekt") version "$detekt_version",
+    id("org.sonarqube") version "$sonar_version"
 }
 
 apply plugin: 'com.android.application'
