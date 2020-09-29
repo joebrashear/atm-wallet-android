@@ -33,7 +33,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.net.toUri
 import cash.just.support.CashSupport
-import cash.just.support.pages.GeneralSupportPage
+import cash.just.support.pages.Topic
 import cash.just.ui.CashUI
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
@@ -87,7 +87,7 @@ class IntroController : BaseController() {
         faq_button.setOnClickListener {
             if (!UiUtils.isClickAllowed()) return@setOnClickListener
             router.fragmentManager()?.let {
-                CashUI.showSupportPage(CashSupport.Builder().detail(GeneralSupportPage.GET_STARTED), it)
+                CashUI.showSupportPage(CashSupport.Builder().detail(Topic.GET_STARTED), it)
             }
         }
     }
