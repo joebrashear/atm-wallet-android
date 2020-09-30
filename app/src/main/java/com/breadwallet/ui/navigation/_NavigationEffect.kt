@@ -35,28 +35,28 @@ import com.platform.HTTPServer
 import java.util.Locale
 
 /** Returns the full support URL for the articleId and currencyCode. */
-fun NavigationTarget.SupportPage.asSupportUrl() = buildString {
-    append(HTTPServer.getPlatformUrl(HTTPServer.URL_SUPPORT))
-    if (articleId.isNotBlank()) {
-        append(UiUtils.ARTICLE_QUERY_STRING)
-        append(articleId)
-
-        val currencyCode = currencyCode ?: ""
-        if (currencyCode.isNotBlank()) {
-            // TODO: Better is Erc20 check
-            val codeOrErc20 = if (
-                currencyCode.isBitcoin()
-                || currencyCode.isEthereum()
-                || currencyCode.isBitcoinCash()
-                || currencyCode.isRipple()
-                || currencyCode.isHedera()
-            ) {
-                currencyCode.toLowerCase(Locale.ROOT)
-            } else {
-                BRConstants.CURRENCY_ERC20
-            }
-
-            append("${UiUtils.CURRENCY_QUERY_STRING}$codeOrErc20")
-        }
-    }
-}
+// fun NavigationTarget.SupportPage.asSupportUrl() = buildString {
+//     append(HTTPServer.getPlatformUrl(HTTPServer.URL_SUPPORT))
+//     if (articleId.isNotBlank()) {
+//         append(UiUtils.ARTICLE_QUERY_STRING)
+//         append(articleId)
+//
+//         val currencyCode = currencyCode ?: ""
+//         if (currencyCode.isNotBlank()) {
+//             // TODO: Better is Erc20 check
+//             val codeOrErc20 = if (
+//                 currencyCode.isBitcoin()
+//                 || currencyCode.isEthereum()
+//                 || currencyCode.isBitcoinCash()
+//                 || currencyCode.isRipple()
+//                 || currencyCode.isHedera()
+//             ) {
+//                 currencyCode.toLowerCase(Locale.ROOT)
+//             } else {
+//                 BRConstants.CURRENCY_ERC20
+//             }
+//
+//             append("${UiUtils.CURRENCY_QUERY_STRING}$codeOrErc20")
+//         }
+//     }
+// }

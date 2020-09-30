@@ -38,7 +38,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bluelinelabs.conductor.RouterTransaction
 import com.breadwallet.R
 import com.breadwallet.breadbox.WalletState
 import com.breadwallet.breadbox.formatCryptoForUi
@@ -49,14 +48,12 @@ import com.breadwallet.logger.logDebug
 import com.breadwallet.model.PriceDataPoint
 import com.breadwallet.tools.animation.UiUtils
 import com.breadwallet.tools.manager.BRSharedPrefs
-import com.breadwallet.tools.util.BRConstants
 import com.breadwallet.tools.util.CurrencyUtils
 import com.breadwallet.tools.util.TokenUtil
 import com.breadwallet.ui.BaseMobiusController
 import com.breadwallet.ui.controllers.AlertDialogController
 import com.breadwallet.ui.flowbind.clicks
-import com.breadwallet.ui.navigation.NavigationTarget
-import com.breadwallet.ui.navigation.asSupportUrl
+import com.breadwallet.ui.navigation.fragmentManager
 import com.breadwallet.ui.wallet.WalletScreen.DIALOG_CREATE_ACCOUNT
 import com.breadwallet.ui.wallet.WalletScreen.E
 import com.breadwallet.ui.wallet.WalletScreen.F
@@ -64,7 +61,6 @@ import com.breadwallet.ui.wallet.WalletScreen.M
 import com.breadwallet.ui.wallet.spark.SparkAdapter
 import com.breadwallet.ui.wallet.spark.SparkView
 import com.breadwallet.ui.wallet.spark.animation.LineSparkAnimator
-import com.breadwallet.ui.web.WebController
 import com.mikepenz.fastadapter.FastAdapter
 import com.mikepenz.fastadapter.GenericFastAdapter
 import com.mikepenz.fastadapter.adapters.GenericModelAdapter
@@ -86,6 +82,9 @@ import org.kodein.di.direct
 import org.kodein.di.erased.instance
 import java.text.SimpleDateFormat
 import java.util.Locale
+import cash.just.support.CashSupport
+import cash.just.support.pages.Topic
+import cash.just.ui.CashUI
 
 private const val EXTRA_CURRENCY_CODE = "currency_code"
 private const val MARKET_CHART_DATE_WITH_HOUR = "MMM d, h:mm"
@@ -144,12 +143,16 @@ open class WalletController(args: Bundle) : BaseMobiusController<M, E, F>(args),
         updateUi()
 
         more_info_button.setOnClickListener {
-            val url = NavigationTarget.SupportPage(BRConstants.FAQ_UNSUPPORTED_TOKEN).asSupportUrl()
-            router.pushController(
-                RouterTransaction.with(
-                    WebController(url)
-                )
-            )
+            // val url = NavigationTarget.SupportPage(BRConstants.FAQ_UNSUPPORTED_TOKEN).asSupportUrl()
+            // router.pushController(
+            //     RouterTransaction.with(
+            //         WebController(url)
+            //     )
+            // )
+
+            router.fragmentManager()?.let {
+                CashUI.showSupportPage(CashSupport.Builder().detail(Topic.WALLET_DISABLED), it)
+            }
         }
 
         txAdapter = ModelAdapter { TransactionListItem(it, currentModel.isCryptoPreferred) }

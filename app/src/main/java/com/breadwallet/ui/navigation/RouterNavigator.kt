@@ -145,39 +145,39 @@ class RouterNavigator(
     }
 
     override fun buy() {
-        val url = String.format(
-            BRConstants.CURRENCY_PARAMETER_STRING_FORMAT,
-            HTTPServer.getPlatformUrl(HTTPServer.URL_BUY),
-            btc.toUpperCase(Locale.ROOT)
-        )
-        val webTransaction =
-            WebController(url).asTransaction(
-                VerticalChangeHandler(),
-                VerticalChangeHandler()
-            )
-
-        when (router.backstack.lastOrNull()?.controller()) {
-            is HomeController -> router.pushController(webTransaction)
-            else -> {
-                router.setBackstack(
-                    listOf(
-                        HomeController().asTransaction(),
-                        webTransaction
-                    ),
-                    VerticalChangeHandler()
-                )
-            }
-        }
+        // val url = String.format(
+        //     BRConstants.CURRENCY_PARAMETER_STRING_FORMAT,
+        //     HTTPServer.getPlatformUrl(HTTPServer.URL_BUY),
+        //     btc.toUpperCase(Locale.ROOT)
+        // )
+        // val webTransaction =
+        //     WebController(url).asTransaction(
+        //         VerticalChangeHandler(),
+        //         VerticalChangeHandler()
+        //     )
+        //
+        // when (router.backstack.lastOrNull()?.controller()) {
+        //     is HomeController -> router.pushController(webTransaction)
+        //     else -> {
+        //         router.setBackstack(
+        //             listOf(
+        //                 HomeController().asTransaction(),
+        //                 webTransaction
+        //             ),
+        //             VerticalChangeHandler()
+        //         )
+        //     }
+        // }
     }
 
     override fun trade() {
-        val url = HTTPServer.getPlatformUrl(HTTPServer.URL_TRADE)
-        router.pushController(
-            WebController(url).asTransaction(
-                VerticalChangeHandler(),
-                VerticalChangeHandler()
-            )
-        )
+        // val url = HTTPServer.getPlatformUrl(HTTPServer.URL_TRADE)
+        // router.pushController(
+        //     WebController(url).asTransaction(
+        //         VerticalChangeHandler(),
+        //         VerticalChangeHandler()
+        //     )
+        // )
     }
 
     override fun menu(effect: NavigationTarget.Menu) {

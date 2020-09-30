@@ -71,7 +71,6 @@ class BrdWalletController : WalletController("BRD") {
             //Collapse without animation before showing the rewards webview.
             EventUtils.pushEvent(EventUtils.EVENT_REWARDS_BANNER)
             mAppBarLayoutRoot!!.setExpanded(false, true)
-            val rewardsUrl = HTTPServer.getPlatformUrl(HTTPServer.URL_REWARDS)
             router.fragmentManager()?.let {
                 CashUI.showSupportPage(CashSupport.Builder().detail(Topic.BRD_REWARDS), it)
             }

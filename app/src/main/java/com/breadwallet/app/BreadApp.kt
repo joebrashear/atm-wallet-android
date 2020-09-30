@@ -387,7 +387,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
 
         // Start our local server as soon as the application instance is created, since we need to
         // display support WebViews during onboarding.
-        HTTPServer.getInstance().startServer(this)
+        // HTTPServer.getInstance().startServer(this)
 
         CashUI.init(getServer())
     }
@@ -434,16 +434,16 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
 
         }
         logDebug("Shutting down HTTPServer.")
-        HTTPServer.getInstance().stopServer()
+        // HTTPServer.getInstance().stopServer()
 
         startedScope.coroutineContext.cancelChildren()
     }
 
     private fun handleOnDestroy() {
-        if (HTTPServer.getInstance().isRunning) {
-            logDebug("Shutting down HTTPServer.")
-            HTTPServer.getInstance().stopServer()
-        }
+        // if (HTTPServer.getInstance().isRunning) {
+        //     logDebug("Shutting down HTTPServer.")
+        //     HTTPServer.getInstance().stopServer()
+        // }
 
         getBreadBox().apply { if (isOpen) close() }
         applicationScope.cancel()
@@ -463,7 +463,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
 
         initializeWalletId()
         BRDFirebaseMessagingService.initialize(context)
-        HTTPServer.getInstance().startServer(this)
+        // HTTPServer.getInstance().startServer(this)
         apiClient.updatePlatform()
         applicationScope.launch {
             // UserMetricsUtil.makeUserMetricsRequest(context)
