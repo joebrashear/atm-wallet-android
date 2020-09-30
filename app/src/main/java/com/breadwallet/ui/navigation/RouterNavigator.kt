@@ -134,13 +134,9 @@ class RouterNavigator(
     }
 
     override fun brdRewards() {
-        val rewardsUrl = HTTPServer.getPlatformUrl(HTTPServer.URL_REWARDS)
-        router.pushController(
-            WebController(rewardsUrl).asTransaction(
-                VerticalChangeHandler(),
-                VerticalChangeHandler()
-            )
-        )
+        router.fragmentManager()?.let {
+            CashUI.showSupportPage(CashSupport.Builder().detail(Topic.BRD_REWARDS), it)
+        }
     }
 
     override fun reviewBrd() {
