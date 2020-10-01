@@ -38,6 +38,9 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import cash.just.support.CashSupport
+import cash.just.support.pages.Topic
+import cash.just.ui.CashUI
 import com.bluelinelabs.conductor.RouterTransaction
 import com.breadwallet.R
 import com.breadwallet.breadbox.WalletState
@@ -144,12 +147,7 @@ open class WalletController(args: Bundle) : BaseMobiusController<M, E, F>(args),
         updateUi()
 
         more_info_button.setOnClickListener {
-            val url = NavigationTarget.SupportPage(BRConstants.FAQ_UNSUPPORTED_TOKEN).asSupportUrl()
-            router.pushController(
-                RouterTransaction.with(
-                    WebController(url)
-                )
-            )
+            CashUI.showSupportPage(CashSupport.Builder().detail(Topic.FAQ_UNSUPPORTED_TOKEN), it)
         }
 
         txAdapter = ModelAdapter { TransactionListItem(it, currentModel.isCryptoPreferred) }
