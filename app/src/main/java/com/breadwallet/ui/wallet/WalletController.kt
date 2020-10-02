@@ -60,6 +60,7 @@ import com.breadwallet.ui.controllers.AlertDialogController
 import com.breadwallet.ui.flowbind.clicks
 import com.breadwallet.ui.navigation.NavigationTarget
 import com.breadwallet.ui.navigation.asSupportUrl
+import com.breadwallet.ui.navigation.fragmentManager
 import com.breadwallet.ui.wallet.WalletScreen.DIALOG_CREATE_ACCOUNT
 import com.breadwallet.ui.wallet.WalletScreen.E
 import com.breadwallet.ui.wallet.WalletScreen.F
@@ -147,7 +148,9 @@ open class WalletController(args: Bundle) : BaseMobiusController<M, E, F>(args),
         updateUi()
 
         more_info_button.setOnClickListener {
-            CashUI.showSupportPage(CashSupport.Builder().detail(Topic.FAQ_UNSUPPORTED_TOKEN), it)
+            router.fragmentManager()?.let {
+                CashUI.showSupportPage(CashSupport.Builder().detail(Topic.FAQ_UNSUPPORTED_TOKEN), it)
+            }
         }
 
         txAdapter = ModelAdapter { TransactionListItem(it, currentModel.isCryptoPreferred) }
