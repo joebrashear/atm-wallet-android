@@ -117,9 +117,9 @@
     <color name="add_wallets_border_color">#e5e5e5</color>
 
     // Dark Mode colors
-    <color name="primary_background">#251935</color>
-    <color name="secondary_background">#302442</color>
-    <color name="tertiary_background">#2E2540</color>
+    <color name="primary_background">#1e1e1e</color>
+    <color name="secondary_background">#292929</color>
+    <color name="tertiary_background">#292929</color>
     <color name="prompt_background">#1E1C41</color>
     <color name="prompt_input">#f8f7fc</color>
     <color name="button_gradient_start_color">#FF5193</color>
@@ -158,17 +158,17 @@
 
 
     <array name="pin_digit_button_colors">
-        <item>#FE5A80</item>
-        <item>#FC6469</item>
-        <item>#FB6B5C</item>
-        <item>#FA714E</item>
-        <item>#FD5E76</item>
-        <item>#FC6568</item>
-        <item>#FB6B5B</item>
-        <item>#FE5A80</item>
-        <item>#FD5F75</item>
-        <item>#FC6667</item>
-        <item>#FF548D</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
     </array>
 
     <color name="ui_accent">#5B6DEE</color>

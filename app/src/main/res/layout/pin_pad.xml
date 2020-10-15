@@ -190,6 +190,7 @@
         android:paddingBottom="8dp"
         android:src="?attr/pin_pad_delete_src"
         android:text=""
+        android:tint="@color/white"
         android:textColor="@color/pin_pad_text"
         android:textSize="@dimen/pin_par_text_size" />
 

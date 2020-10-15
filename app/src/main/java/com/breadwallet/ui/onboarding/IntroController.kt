@@ -32,17 +32,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.net.toUri
+import cash.just.support.CashSupport
+import cash.just.support.pages.GeneralSupportPage
+import cash.just.ui.CashUI
 import com.bluelinelabs.conductor.RouterTransaction
 import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
 import com.breadwallet.R
 import com.breadwallet.tools.animation.UiUtils
-import com.breadwallet.tools.util.BRConstants
 import com.breadwallet.tools.util.EventUtils
 import com.breadwallet.tools.util.TokenUtil
 import com.breadwallet.ui.BaseController
-import com.breadwallet.ui.navigation.NavigationTarget
-import com.breadwallet.ui.navigation.asSupportUrl
-import com.breadwallet.ui.web.WebController
+import com.breadwallet.ui.navigation.fragmentManager
 import kotlinx.android.synthetic.main.controller_intro.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -86,19 +86,16 @@ class IntroController : BaseController() {
         }
         faq_button.setOnClickListener {
             if (!UiUtils.isClickAllowed()) return@setOnClickListener
-            val url = NavigationTarget.SupportPage(BRConstants.FAQ_START_VIEW).asSupportUrl()
-            router.pushController(
-                RouterTransaction.with(
-                    WebController(url)
-                )
-            )
+            router.fragmentManager()?.let {
+                CashUI.showSupportPage(CashSupport.Builder().detail(GeneralSupportPage.GET_STARTED), it)
+            }
         }
     }
 
     override fun onAttach(view: View) {
         super.onAttach(view)
         EventUtils.pushEvent(EventUtils.EVENT_LANDING_PAGE_APPEARED)
-        startAnimations()
+        // startAnimations()
     }
 
     private fun startAnimations() {

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="white" type="color">#ffffff</color>
+    <color name="black" type="color">#000000</color>
+
+    <color name="primary_background">@color/black</color>
+    <color name="secondary_background">@color/black</color>
+    <color name="tertiary_background">@color/black</color>
+    <color name="prompt_background">@color/black</color>
+
+    <array  name="pin_digit_button_colors">
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+        <item>#FFFFFF</item>
+    </array>
+</resources>
