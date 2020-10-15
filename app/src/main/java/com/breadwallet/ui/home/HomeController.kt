@@ -98,6 +98,7 @@ class HomeController(
             RatesRepository.getInstance(applicationContext!!),
             direct.instance(),
             direct.instance(),
+            direct.instance(),
             direct.instance()
         )
 
