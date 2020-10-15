@@ -632,29 +632,6 @@
     <string name="RecoveryKeyFlow.generateKeyExplanation">Esta clave es necesaria para recuperar su dinero si cambia o pierde su teléfono.</string>
     <!-- Default title for the recovery phrase landing page -->
     <string name="RecoveryKeyFlow.generateKeyTitle">Genera su frase de recuperación privada</string>
-    <string name="RecoverWallet.subheader">Introduce la frase de recuperación para la cartera que deseas recuperar.</string>
-    <!-- Reset PIN with paper key: sub-header -->
-    <string name="RecoverWallet.subheader_reset_pin">Para restablecer el PIN, introduce las palabras de tu frase de recuperación en los cuadros a continuación.</string>
-    <!-- Instructs the user to enter words from the set of recovery key words. -->
-    <string name="RecoveryKeyFlow.confirmRecoveryInputError">La palabra que ha introducido es incorrecta. Vuelva a intentarlo.</string>
-    <!-- Instructs the user to enter words from the set of recovery key words. -->
-    <string name="RecoveryKeyFlow.confirmRecoveryKeySubtitle">¡Casi listo! Introduzca las siguientes palabras de su frase de recuperación.</string>
-    <!-- Title for the confirmation step of the recovery key flow. -->
-    <string name="RecoveryKeyFlow.confirmRecoveryKeyTitle">Confirmar frase de recuperación</string>
-    <!-- Title displayed when the user starts the process of entering a recovery key -->
-    <string name="RecoveryKeyFlow.enterRecoveryKey">Introducir frase de recuperación</string>
-    <!-- Subtitle displayed when the user starts the process of entering a recovery key -->
-    <string name="RecoveryKeyFlow.enterRecoveryKeySubtitle">Introduzca su frase de recuperación para desvincular esta billetera de su dispositivo.</string>
-    <!-- Body text for an alert dialog asking the user whether to set up the recovery key later -->
-    <string name="RecoveryKeyFlow.exitRecoveryKeyPromptBody">¿Está seguro de que desea configurar su frase de recuperación más tarde?</string>
-    <!-- Title for an alert dialog asking the user whether to set up the recovery key later -->
-    <string name="RecoveryKeyFlow.exitRecoveryKeyPromptTitle">Configurar más tarde</string>
-    <!-- Button text for the 'Generate Recovery Key' button -->
-    <string name="RecoveryKeyFlow.generateKeyButton">Generar frase de recuperación</string>
-    <!-- Subtext for the recovery key landing page. -->
-    <string name="RecoveryKeyFlow.generateKeyExplanation">Esta frase es necesaria para recuperar su dinero si cambia o pierde su teléfono.</string>
-    <!-- Default title for the recovery key landing page -->
-    <string name="RecoveryKeyFlow.generateKeyTitle">Genere su frase de recuperación privada</string>
     <!-- Error text displayed when the user enters an incorrect recovery phrase -->
     <string name="RecoveryKeyFlow.invalidPhrase">Algunas de las palabras que ingresó no coinciden con su frase de recuperación. Inténtalo de nuevo.</string>
     <!-- Title for recovery key intro page -->
@@ -674,7 +651,7 @@
     <!-- Assures the user that BRD will keep the user's funds secure. -->
     <string name="RecoveryKeyFlow.securityAssurance">Compre e intercambie sabiendo que sus fondos están protegidos por la mejor seguridad y privacidad del mercado.</string>
     <!-- Recommends that the user stores the recovery key in a secure location -->
-    <string name="RecoveryKeyFlow.storeSecurelyRecommendation">Guarde su clave en un lugar seguro. Esta es la única forma de recuperar su billetera. BRD no guarda una copia.</string>
+    <string name="RecoveryKeyFlow.storeSecurelyRecommendation">Guarde su clave en un lugar seguro. Esta es la única forma de recuperar su billetera. Coinsquare no guarda una copia.</string>
     <!-- Title for the success page after the recovery phrase has been set up -->
     <string name="RecoveryKeyFlow.successHeading">¡Felicidades! Completó la configuración de la frase de recuperación.</string>
     <!-- Subtitle for the success page after the recovery key has been set up -->
