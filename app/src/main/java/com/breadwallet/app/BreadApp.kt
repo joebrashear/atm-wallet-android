@@ -31,6 +31,7 @@ import android.content.Context
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.CameraXConfig
@@ -59,7 +60,9 @@ import com.breadwallet.tools.crypto.Base32
 import com.breadwallet.tools.crypto.CryptoHelper
 import com.breadwallet.tools.manager.BRReportsManager
 import com.breadwallet.tools.manager.BRSharedPrefs
+import com.breadwallet.tools.manager.ConnectivityStateProvider
 import com.breadwallet.tools.manager.InternetManager
+import com.breadwallet.tools.manager.NetworkCallbacksConnectivityStateProvider
 import com.breadwallet.tools.manager.RatesFetcher
 import com.breadwallet.tools.security.BRKeyStore
 import com.breadwallet.tools.security.BrdUserManager
@@ -69,7 +72,9 @@ import com.breadwallet.tools.services.BRDFirebaseMessagingService
 import com.breadwallet.tools.util.EventUtils
 import com.breadwallet.tools.util.ServerBundlesHelper
 import com.breadwallet.tools.util.TokenUtil
+import com.breadwallet.util.AddressResolverServiceLocator
 import com.breadwallet.util.CryptoUriParser
+import com.breadwallet.util.FioService
 import com.breadwallet.util.PayIdService
 import com.breadwallet.util.errorHandler
 import com.breadwallet.util.isEthereum
@@ -307,9 +312,14 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
 
         bind<OkHttpClient>() with singleton { OkHttpClient() }
 
+        bind<BdbAuthInterceptor>() with singleton {
+            val httpClient = instance<OkHttpClient>()
+            BdbAuthInterceptor(httpClient, direct.instance())
+        }
+
         bind<BlockchainDb>() with singleton {
             val httpClient = instance<OkHttpClient>()
-            val authInterceptor = BdbAuthInterceptor(httpClient, direct.instance())
+            val authInterceptor = instance<BdbAuthInterceptor>()
             BlockchainDb(
                 httpClient.newBuilder()
                     .addInterceptor(authInterceptor)
@@ -319,6 +329,17 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
 
         bind<PayIdService>() with singleton {
             PayIdService(instance())
+        }
+
+        bind<FioService>() with singleton {
+            FioService(instance())
+        }
+
+        bind<AddressResolverServiceLocator>() with singleton {
+            AddressResolverServiceLocator(
+                instance(),
+                instance()
+            )
         }
 
         bind<BreadBox>() with singleton {
@@ -346,6 +367,17 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
         bind<ConversionTracker>() with singleton {
             ConversionTracker(instance())
         }
+
+        bind<ConnectivityStateProvider>() with singleton {
+            val connectivityManager =
+                this@BreadApp.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                NetworkCallbacksConnectivityStateProvider(connectivityManager)
+            } else {
+                InternetManager(connectivityManager,this@BreadApp)
+            }
+        }
     }
 
     private var accountLockJob: Job? = null
@@ -355,6 +387,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
     private val ratesFetcher by instance<RatesFetcher>()
     private val accountMetaData by instance<AccountMetaDataProvider>()
     private val conversionTracker by instance<ConversionTracker>()
+    private val connectivityStateProvider by instance<ConnectivityStateProvider>()
 
     override fun onCreate() {
         super.onCreate()
@@ -379,11 +412,6 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
             ServerBundlesHelper.extractBundlesIfNeeded(mInstance)
             TokenUtil.initialize(mInstance, false)
         }
-
-        registerReceiver(
-            InternetManager.getInstance(),
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        )
 
         // Start our local server as soon as the application instance is created, since we need to
         // display support WebViews during onboarding.
@@ -445,6 +473,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
             HTTPServer.getInstance().stopServer()
         }
 
+        connectivityStateProvider.close()
         getBreadBox().apply { if (isOpen) close() }
         applicationScope.cancel()
     }
