@@ -147,7 +147,7 @@ class RatesFetcher(
             }
         }
 
-        currencyEntities.addAll(getFixedRates())
+        // currencyEntities.addAll(getFixedRates())
 
         if (currencyEntities.isNotEmpty()) {
             ratesRepo.putCurrencyRates(currencyEntities)
