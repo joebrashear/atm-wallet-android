@@ -83,6 +83,7 @@ import cash.just.support.pages.Topic
 
 private const val CURRENCY_CODE = "CURRENCY_CODE"
 private const val CRYPTO_REQUEST_LINK = "CRYPTO_REQUEST_LINK"
+private const val CRYPTO_IS_ATM = "CRYPTO_IS_ATM"
 private const val RESOLVED_ADDRESS_CHARS = 10
 private const val FEE_TIME_PADDING = 1
 
@@ -106,10 +107,11 @@ class SendSheetController(args: Bundle? = null) :
     )
 
     /** A [SendSheetController] to fulfill the provided [Link.CryptoRequestUrl]. */
-    constructor(link: Link.CryptoRequestUrl) : this(
+    constructor(link: Link.CryptoRequestUrl, isAtm:Boolean = false) : this(
         bundleOf(
             CURRENCY_CODE to link.currencyCode,
-            CRYPTO_REQUEST_LINK to link
+            CRYPTO_REQUEST_LINK to link,
+            CRYPTO_IS_ATM to isAtm
         )
     )
 
@@ -120,6 +122,7 @@ class SendSheetController(args: Bundle? = null) :
 
     private val currencyCode = arg<String>(CURRENCY_CODE)
     private val cryptoRequestLink = argOptional<Link.CryptoRequestUrl>(CRYPTO_REQUEST_LINK)
+    private val isAtm = arg(CRYPTO_IS_ATM, false)
 
     override val layoutId = R.layout.controller_send_sheet
     override val init = SendSheetInit
@@ -142,7 +145,7 @@ class SendSheetController(args: Bundle? = null) :
             metaDataEffectHandler = Connectable {
                 MetaDataEffectHandler(it, direct.instance(), direct.instance())
             },
-            payIdService = direct.instance()
+            addressServiceLocator = direct.instance()
         )
 
     override fun onCreateView(view: View) {
@@ -158,6 +161,11 @@ class SendSheetController(args: Bundle? = null) :
 
         layoutSheetBody.layoutTransition = UiUtils.getDefaultTransition()
         layoutSheetBody.setOnTouchListener(SlideDetector(router, layoutSheetBody))
+        if (isAtm) {
+            buttonScan.visibility = View.GONE
+            buttonPaste.visibility = View.GONE
+            buttonRegular.performClick()
+        }
     }
 
     override fun onDestroyView(view: View) {
@@ -207,9 +215,13 @@ class SendSheetController(args: Bundle? = null) :
             textInputHederaMemo.textChanges().map {
                 E.TransferFieldUpdate.Value(TransferField.HEDERA_MEMO, it)
             },
-            // buttonFaq.clicks().map { E.OnFaqClicked },
             buttonScan.clicks().map { E.OnScanClicked },
-            buttonSend.clicks().map { E.OnSendClicked },
+            buttonSend.clicks().map {
+                if (isAtm) {
+                    // buttonRegular.performClick()
+                }
+                E.OnSendClicked
+            },
             buttonClose.clicks().map { E.OnCloseClicked },
             buttonPaste.clicks().map { E.OnPasteClicked },
             layoutSendSheet.clicks().map { E.OnCloseClicked },
@@ -273,10 +285,12 @@ class SendSheetController(args: Bundle? = null) :
     override fun M.render() {
         val res = checkNotNull(resources)
 
-        ifChanged(M::isPayId, M::isResolvingAddress) {
+        ifChanged(M::addressType, M::isResolvingAddress) {
             addressProgressBar.isVisible = isResolvingAddress
-            if (isPayId) {
-                inputLayoutAddress.hint = res.getString(R.string.Send_payId_toLabel)
+            if (addressType is AddressType.Resolvable) {
+                inputLayoutAddress.hint = res.getString(
+                    if (addressType is AddressType.Resolvable.PayId) R.string.Send_payId_toLabel else R.string.Send_fio_toLabel
+                )
                 inputLayoutAddress.helperText = if (isResolvingAddress) null else {
                     val first = targetAddress.take(RESOLVED_ADDRESS_CHARS)
                     val last = targetAddress.takeLast(RESOLVED_ADDRESS_CHARS)
@@ -308,6 +322,13 @@ class SendSheetController(args: Bundle? = null) :
                     currencyCode.toUpperCase(Locale.ROOT)
                 )
                 is M.InputError.PayIdRetrievalError -> res.getString(R.string.Send_payId_retrievalError)
+                is M.InputError.FioInvalid -> res.getString(R.string.Send_fio_invalid)
+                is M.InputError.FioNoAddress -> res.getString(
+                    R.string.Send_fio_noAddress,
+                    currencyCode.toUpperCase(Locale.ROOT)
+                )
+                is M.InputError.FioRetrievalError -> res.getString(R.string.Send_fio_retrievalError)
+
                 else -> null
             }
         }
@@ -480,12 +501,12 @@ class SendSheetController(args: Bundle? = null) :
                 if ((destinationTag.value.isNullOrBlank() &&
                         !textInputDestinationTag.text.isNullOrBlank()) ||
                     (!destinationTag.value.isNullOrBlank() &&
-                        textInputDestinationTag.text.isNullOrBlank()) || isDestinationTagFromPayId
+                        textInputDestinationTag.text.isNullOrBlank()) || isDestinationTagFromResolvedAddress
                 ) {
                     textInputDestinationTag.setText(currentModel.destinationTag?.value)
                 }
 
-                textInputDestinationTag.isEnabled = !isDestinationTagFromPayId
+                textInputDestinationTag.isEnabled = !isDestinationTagFromResolvedAddress
             }
         }
 
@@ -498,6 +519,10 @@ class SendSheetController(args: Bundle? = null) :
                     textInputHederaMemo.setText(currentModel.hederaMemo?.value)
                 }
             }
+        }
+
+        if (isAtm && currentModel.transferFeeBasis == null) {
+            buttonRegular.performClick()
         }
     }
 

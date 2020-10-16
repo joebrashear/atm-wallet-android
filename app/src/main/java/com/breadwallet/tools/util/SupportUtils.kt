@@ -44,6 +44,9 @@ import com.breadwallet.tools.manager.BRSharedPrefs.getWalletRewardId
 import com.breadwallet.tools.security.BrdUserManager
 import com.breadwallet.tools.security.CryptoUserManager
 import com.breadwallet.util.pubKeyToEthAddress
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.apache.commons.io.IOUtils
 import java.io.IOException
 import java.util.Locale
@@ -68,7 +71,9 @@ object SupportUtils {
         val process = Runtime.getRuntime().exec(LOGCAT_COMMAND)
         IOUtils.toString(process.inputStream, Charsets.UTF_8)
     } catch (ex: IOException) {
-        Toast.makeText(context, FAILED_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+        GlobalScope.launch(Dispatchers.Main) {
+            Toast.makeText(context, FAILED_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+        }
         DEFAULT_LOG_ATTACHMENT_BODY
     }
 
@@ -211,7 +216,6 @@ object SupportUtils {
             SUPPORT_TEAM_EMAIL
         }
         val emailIntent = Intent(Intent.ACTION_SEND).apply {
-            type = MIME_TYPE
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             putExtra(Intent.EXTRA_STREAM, uri)
             putExtra(Intent.EXTRA_EMAIL, arrayOf(emailAddress))
@@ -224,6 +228,44 @@ object SupportUtils {
                 buildInfoString(context, breadBox, userManager, debugData, feedback)
             )
         }
+
+        try {
+            context.startActivity(
+                emailIntent.apply {
+                    selector = Intent.parseUri("mailto:$emailAddress", 0)
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            )
+        } catch (e: ActivityNotFoundException) {
+            GlobalScope.launch(Dispatchers.Main) {
+                Toast.makeText(context, NO_EMAIL_APP_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    fun submitEmailFromOnboarding(context: Context) {
+        val file = FileHelper.saveToExternalStorage(context, LOGS_FILE_NAME, getLogs(context))
+        val uri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID, file)
+        val emailIntent = Intent(Intent.ACTION_SEND).apply {
+            type = MIME_TYPE
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            putExtra(Intent.EXTRA_STREAM, uri)
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(ANDROID_TEAM_EMAIL))
+            putExtra(
+                Intent.EXTRA_SUBJECT,
+                String.format(LOGS_EMAIL_SUBJECT, getDeviceId())
+            )
+            putExtra(
+                Intent.EXTRA_TEXT,
+                buildString {
+                    addFeedbackBlock(null)
+                    appendln()
+                    addApplicationBlock(context)
+                    appendln()
+                    addDeviceBlock()
+                }
+            )
+        }
         try {
             context.startActivity(
                 Intent.createChooser(
@@ -234,7 +276,9 @@ object SupportUtils {
                 }
             )
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, NO_EMAIL_APP_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+            GlobalScope.launch(Dispatchers.Main) {
+                Toast.makeText(context, NO_EMAIL_APP_ERROR_MESSAGE, Toast.LENGTH_LONG).show()
+            }
         }
     }
 }
