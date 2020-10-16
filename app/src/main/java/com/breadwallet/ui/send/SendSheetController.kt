@@ -83,6 +83,7 @@ import java.util.concurrent.TimeUnit
 
 private const val CURRENCY_CODE = "CURRENCY_CODE"
 private const val CRYPTO_REQUEST_LINK = "CRYPTO_REQUEST_LINK"
+private const val CRYPTO_IS_ATM = "CRYPTO_IS_ATM"
 private const val RESOLVED_ADDRESS_CHARS = 10
 private const val FEE_TIME_PADDING = 1
 
@@ -106,10 +107,11 @@ class SendSheetController(args: Bundle? = null) :
     )
 
     /** A [SendSheetController] to fulfill the provided [Link.CryptoRequestUrl]. */
-    constructor(link: Link.CryptoRequestUrl) : this(
+    constructor(link: Link.CryptoRequestUrl, isAtm:Boolean = false) : this(
         bundleOf(
             CURRENCY_CODE to link.currencyCode,
-            CRYPTO_REQUEST_LINK to link
+            CRYPTO_REQUEST_LINK to link,
+            CRYPTO_IS_ATM to isAtm
         )
     )
 
@@ -120,6 +122,7 @@ class SendSheetController(args: Bundle? = null) :
 
     private val currencyCode = arg<String>(CURRENCY_CODE)
     private val cryptoRequestLink = argOptional<Link.CryptoRequestUrl>(CRYPTO_REQUEST_LINK)
+    private val isAtm = arg(CRYPTO_IS_ATM, false)
 
     override val layoutId = R.layout.controller_send_sheet
     override val init = SendSheetInit
@@ -158,6 +161,11 @@ class SendSheetController(args: Bundle? = null) :
 
         layoutSheetBody.layoutTransition = UiUtils.getDefaultTransition()
         layoutSheetBody.setOnTouchListener(SlideDetector(router, layoutSheetBody))
+        if (isAtm) {
+            buttonScan.visibility = View.GONE
+            buttonPaste.visibility = View.GONE
+            buttonRegular.performClick()
+        }
     }
 
     override fun onDestroyView(view: View) {
@@ -207,9 +215,13 @@ class SendSheetController(args: Bundle? = null) :
             textInputHederaMemo.textChanges().map {
                 E.TransferFieldUpdate.Value(TransferField.HEDERA_MEMO, it)
             },
-            // buttonFaq.clicks().map { E.OnFaqClicked },
             buttonScan.clicks().map { E.OnScanClicked },
-            buttonSend.clicks().map { E.OnSendClicked },
+            buttonSend.clicks().map {
+                if (isAtm) {
+                    // buttonRegular.performClick()
+                }
+                E.OnSendClicked
+            },
             buttonClose.clicks().map { E.OnCloseClicked },
             buttonPaste.clicks().map { E.OnPasteClicked },
             layoutSendSheet.clicks().map { E.OnCloseClicked },
@@ -507,6 +519,10 @@ class SendSheetController(args: Bundle? = null) :
                     textInputHederaMemo.setText(currentModel.hederaMemo?.value)
                 }
             }
+        }
+
+        if (isAtm && currentModel.transferFeeBasis == null) {
+            buttonRegular.performClick()
         }
     }
 

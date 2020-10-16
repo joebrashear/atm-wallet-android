@@ -244,7 +244,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
                     currencyCode = com.breadwallet.tools.util.btc,
                     address = address,
                     amount = btcAmount.toFloat().toBigDecimal()
-                ))
+                ), true)
 
             )
         )
