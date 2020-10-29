@@ -92,7 +92,7 @@ android {
             manifestPlaceholders = [applicationIcon: "@mipmap/ic_cs_launcher_testnet"]
             applicationId = "cash.just.testnet"
             dimension "mode"
-            resValue "string", "app_name", "BRD Testnet"
+            resValue "string", "app_name", "Coinsquare Testnet"
             buildConfigField "boolean", "BITCOIN_TESTNET", "true"
             missingDimensionStrategy 'network', 'onTestnet'
         }
