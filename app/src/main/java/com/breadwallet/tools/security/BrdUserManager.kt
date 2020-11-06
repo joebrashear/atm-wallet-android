@@ -287,7 +287,7 @@ class CryptoUserManager(
             (BRKeyStore.getMasterPublicKey() != null || BRKeyStore.hasAccountBytes())
 
     override fun getState(): BrdUserState = when {
-        // Account invalidated and phrase not provided or phrase Key invalidated, recovery required
+            // Account invalidated and phrase not provided or phrase Key invalidated, recovery required
         accountInvalidated.get() || !isPhraseKeyValid() -> if (requiresUninstall()) {
             BrdUserState.KeyStoreInvalid.Uninstall
         } else {

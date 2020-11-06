@@ -28,6 +28,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.security.keystore.UserNotAuthenticatedException
+import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import cash.just.atm.base.AtmResult
@@ -152,6 +153,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
                     return@launch
                 }
             }
+
+            Log.e("david", "isMigratedRequired" + userManager.isMigrationRequired())
 
             // The app is launched, no screen to be restored
             if (!router.hasRootController()) {
