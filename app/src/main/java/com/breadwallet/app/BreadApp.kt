@@ -68,6 +68,7 @@ import com.breadwallet.tools.security.BRKeyStore
 import com.breadwallet.tools.security.BrdUserManager
 import com.breadwallet.tools.security.BrdUserState
 import com.breadwallet.tools.security.CryptoUserManager
+import com.breadwallet.tools.security.OldBRKeyStore
 import com.breadwallet.tools.services.BRDFirebaseMessagingService
 import com.breadwallet.tools.util.EventUtils
 import com.breadwallet.tools.util.ServerBundlesHelper
@@ -394,6 +395,7 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
         installHooks()
         mInstance = this
 
+        OldBRKeyStore.provideContext(this)
         BRKeyStore.provideContext(this)
         BRSharedPrefs.initialize(this)
 
