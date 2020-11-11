@@ -132,6 +132,7 @@ android {
             buildConfigField "boolean", "IS_INTERNAL_BUILD", "false"
         }
         debug {
+            signingConfig signingConfigs.FakeSigningConfig
             applicationIdSuffix '.debug'
             debuggable = true
             jniDebuggable = true
