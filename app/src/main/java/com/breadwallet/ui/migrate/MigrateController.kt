@@ -56,30 +56,18 @@ class MigrateController(
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-        Log.d("david", "onAttach]")
 
         BreadApp.applicationScope.launch(Main) {
             mutex.withLock<Unit> {
-                Log.d("david", "withLock]")
-
                 if (userManager.isMigrationRequired()) {
-                    Log.d("david", "isMigrationRequired]")
-
                     try {
                         migrateAccount()
-                        Log.d("david", "migrateAccount")
-
                     } catch (e: UserNotAuthenticatedException) {
-                        Log.d("david", "UserNotAuthenticatedException")
 
                         waitUntilAttached()
-                        Log.d("david", "finish")
-
                         activity?.finish()
                     }
                 } else if (isAttached) {
-                    Log.d("david", "isAttached redirect")
-
                     redirect()
                 }
             }
@@ -99,22 +87,15 @@ class MigrateController(
 
     private suspend fun migrateAccount() {
         if (userManager.migrateKeystoreData()) {
-            Log.d("david", "migrateAccount" + "migrateKeystoreData")
             val context = (BreadApp.getBreadContext().applicationContext as BreadApp)
             // The one case where we need to invoke this outside of BreadApp, need to set the migrate flag
             context.startWithInitializedWallet(direct.instance(), true)
-            Log.d("david", "startWithInitializedWallet")
 
             waitUntilAttached()
-            Log.d("david", "replaceTopController")
-
             router.replaceTopController(RouterTransaction.with(LoginController()))
         } else {
-            Log.d("david", "else migrateAccount" + "migrateKeystoreData")
 
             waitUntilAttached()
-            Log.d("david", "replaceTopController")
-
             router.replaceTopController(RouterTransaction.with(KeyStoreController()))
         }
     }
