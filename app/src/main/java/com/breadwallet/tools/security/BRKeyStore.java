@@ -543,41 +543,7 @@ public final class BRKeyStore {
         return false;
     }
 
-    public static boolean needsMigration() {
-        try {
-            getPinCodeInternal();
-            Log.d("david", "needsMigration false");
-
-            return false;
-        } catch (Exception e) {
-            Log.d("david", "needsMigration true" + e.toString());
-
-            return true;
-        }
-    }
-
     public static String getPinCode() {
-//        Log.d("david", "getPinCode");
-//        if (needsMigration()) {
-//            String pin = OldBRKeyStore.getPinCode(context);
-//            Log.d("david", "oldpin:" + pin);
-//
-//            if (!pin.isEmpty()) {
-//                Log.d("david", "putting pin");
-//
-//                putPinCode(pin);
-//            }
-//            return pin;
-//        } else {
-//            Log.d("david", "getPinCodeInternal");
-//
-//
-//            return getPinCodeInternal();
-//        }
-        return getPinCodeInternal();
-    }
-
-    public static String getPinCodeInternal() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(PASS_CODE_ALIAS);
         byte[] result = null;
         try {
