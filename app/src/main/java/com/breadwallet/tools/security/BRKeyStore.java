@@ -543,25 +543,38 @@ public final class BRKeyStore {
         return false;
     }
 
-    private static boolean needsMigration() {
+    public static boolean needsMigration() {
         try {
             getPinCodeInternal();
+            Log.d("david", "needsMigration false");
+
             return false;
         } catch (Exception e) {
+            Log.d("david", "needsMigration true" + e.toString());
+
             return true;
         }
     }
 
     public static String getPinCode() {
-        if (needsMigration()) {
-            String pin = OldBRKeyStore.getPinCode(context);
-            if (!pin.isEmpty()) {
-                putPinCode(pin);
-            }
-            return pin;
-        } else {
-            return getPinCodeInternal();
-        }
+//        Log.d("david", "getPinCode");
+//        if (needsMigration()) {
+//            String pin = OldBRKeyStore.getPinCode(context);
+//            Log.d("david", "oldpin:" + pin);
+//
+//            if (!pin.isEmpty()) {
+//                Log.d("david", "putting pin");
+//
+//                putPinCode(pin);
+//            }
+//            return pin;
+//        } else {
+//            Log.d("david", "getPinCodeInternal");
+//
+//
+//            return getPinCodeInternal();
+//        }
+        return getPinCodeInternal();
     }
 
     public static String getPinCodeInternal() {

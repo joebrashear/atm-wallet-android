@@ -32,6 +32,7 @@ import android.os.Build
 import android.security.keystore.KeyPermanentlyInvalidatedException
 import android.security.keystore.UserNotAuthenticatedException
 import android.text.format.DateUtils
+import android.util.Log
 import androidx.annotation.VisibleForTesting
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -57,7 +58,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
@@ -234,11 +234,11 @@ class CryptoUserManager(
         }
 
         // Migrate other fields
-        BRKeyStore.getToken()?.let { putToken(String(it)) }
-        BRKeyStore.getEthPublicKey()?.let { putEthPublicKey(it) }
-        putPinCode(BRKeyStore.getPinCode())
-        putFailCount(BRKeyStore.getFailCount())
-        putFailTimestamp(BRKeyStore.getFailTimeStamp())
+        OldBRKeyStore.getToken()?.let { putToken(String(it)) }
+        OldBRKeyStore.getEthPublicKey()?.let { putEthPublicKey(it) }
+        putPinCode(OldBRKeyStore.getPinCode())
+        putFailCount(OldBRKeyStore.getFailCount())
+        putFailTimestamp(OldBRKeyStore.getFailTimeStamp())
 
         BreadApp.applicationScope.launch(Dispatchers.IO) {
             BRKeyStore.wipeAfterMigration()

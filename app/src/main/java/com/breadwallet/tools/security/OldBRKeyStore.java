@@ -24,6 +24,7 @@
  */
 package com.breadwallet.tools.security;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -161,6 +162,13 @@ public final class OldBRKeyStore {
         VALID,
         INVALID_WIPE,
         INVALID_UNINSTALL;
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private static Context context;
+
+    public static void provideContext(Context context) {
+        OldBRKeyStore.context = context;
     }
 
     // Storing all the Keystore data into a map.
@@ -562,7 +570,7 @@ public final class OldBRKeyStore {
         return false;
     }
 
-    public static byte[] getEthPublicKey(final Context context) {
+    public static byte[] getEthPublicKey() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(ETH_PUBKEY_ALIAS);
         try {
             return getData(context, obj.mAlias, obj.mDatafileName, obj.mIvFileName, 0);
@@ -626,7 +634,7 @@ public final class OldBRKeyStore {
         return false;
     }
 
-    public static byte[] getToken(final Context context) {
+    public static byte[] getToken() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(TOKEN_ALIAS);
         try {
             return getData(context, obj.mAlias, obj.mDatafileName, obj.mIvFileName, 0);
@@ -743,7 +751,7 @@ public final class OldBRKeyStore {
         return new File(getFilePath(obj.mAlias, context)).exists();
     }
 
-    public static String getPinCode(final Context context) {
+    public static String getPinCode() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(PASS_CODE_ALIAS);
         byte[] result = null;
         try {
@@ -786,7 +794,7 @@ public final class OldBRKeyStore {
         return false;
     }
 
-    public static int getFailCount(final Context context) {
+    public static int getFailCount() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(FAIL_COUNT_ALIAS);
         byte[] result = null;
         try {
@@ -808,7 +816,7 @@ public final class OldBRKeyStore {
         return false;
     }
 
-    public static long getFailTimeStamp(final Context context) {
+    public static long getFailTimeStamp() {
         AliasObject obj = ALIAS_OBJECT_MAP.get(FAIL_TIMESTAMP_ALIAS);
         byte[] result = null;
         try {
