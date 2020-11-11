@@ -26,7 +26,6 @@ package com.breadwallet.ui.migrate
 
 import android.os.Bundle
 import android.security.keystore.UserNotAuthenticatedException
-import android.util.Log
 import android.view.View
 import com.bluelinelabs.conductor.RouterTransaction
 import com.breadwallet.R
@@ -56,14 +55,12 @@ class MigrateController(
 
     override fun onAttach(view: View) {
         super.onAttach(view)
-
         BreadApp.applicationScope.launch(Main) {
             mutex.withLock<Unit> {
                 if (userManager.isMigrationRequired()) {
                     try {
                         migrateAccount()
                     } catch (e: UserNotAuthenticatedException) {
-
                         waitUntilAttached()
                         activity?.finish()
                     }
@@ -75,8 +72,6 @@ class MigrateController(
     }
 
     private fun redirect() {
-        Log.d("david", "redirect")
-
         val target = if (userManager.isInitialized()) {
             LoginController()
         } else {
@@ -94,7 +89,6 @@ class MigrateController(
             waitUntilAttached()
             router.replaceTopController(RouterTransaction.with(LoginController()))
         } else {
-
             waitUntilAttached()
             router.replaceTopController(RouterTransaction.with(KeyStoreController()))
         }
