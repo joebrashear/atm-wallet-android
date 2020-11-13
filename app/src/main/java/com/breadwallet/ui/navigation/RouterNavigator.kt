@@ -253,6 +253,12 @@ class RouterNavigator(
                 BRConstants.FAQ_IMPORT_WALLET -> {
                     CashUI.showSupportPage(CashSupport.Builder().detail(Topic.IMPORT_WALLET), it)
                 }
+                BRConstants.FAQ_ENABLE_FINGERPRINT -> {
+                    CashUI.showSupportPage(CashSupport.Builder().detail(Topic.FINGERPRINT), it)
+                }
+                BRConstants.FAQ_RESCAN -> {
+                    CashUI.showSupportPage(CashSupport.Builder().detail(Topic.SYNC_BITCOIN_BLOCK_CHAIN), it)
+                }
                 BRConstants.FAQ_PAPER_KEY -> {
                     CashUI.showSupportPage(CashSupport.Builder().detail(Topic.RECOVERY_KEY), it)
                 } else -> {

@@ -32,7 +32,6 @@ import com.bluelinelabs.conductor.RouterTransaction
 import com.breadwallet.BuildConfig
 import com.breadwallet.R
 import com.breadwallet.tools.manager.BRClipboardManager
-import com.breadwallet.tools.manager.BRSharedPrefs
 import com.breadwallet.tools.util.BRConstants
 import com.breadwallet.tools.util.SupportUtils
 import com.breadwallet.ui.BaseController
@@ -84,14 +83,14 @@ class AboutController(args: Bundle? = null) : BaseController(args) {
         twitter_share_button.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BRConstants.URL_TWITTER)))
         }
-        blog_share_button.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BRConstants.URL_BLOG)))
+        reedit_button.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BRConstants.URL_REDDIT)))
         }
         policy_text.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BRConstants.URL_PRIVACY_POLICY)))
         }
 
-        brd_rewards_id.text = BRSharedPrefs.getWalletRewardId()
+        // brd_rewards_id.text = BRSharedPrefs.getWalletRewardId()
         brd_copy.setOnClickListener {
             BRClipboardManager.putClipboard(activity, brd_rewards_id.text.toString())
             toast(R.string.Receive_copied)
