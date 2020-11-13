@@ -24,6 +24,7 @@
  */
 package com.breadwallet.ui.settings.fingerprint
 
+import android.util.Log
 import com.breadwallet.R
 import com.breadwallet.ui.BaseMobiusController
 import com.breadwallet.ui.flowbind.checked
@@ -62,7 +63,10 @@ class FingerprintSettingsController : BaseMobiusController<M, E, F>() {
             .launchIn(uiBindScope)
 
         return merge(
-            faq_btn.clicks().map { E.OnFaqClicked },
+            faq_btn.clicks().map {
+                Log.e("david","sdf")
+                E.OnFaqClicked
+            },
             back_btn.clicks().map { E.OnBackClicked },
             switch_send_money.checked().map { E.OnSendMoneyChanged(it) },
             switch_unlock_app.checked().map { E.OnAppUnlockChanged(it) }

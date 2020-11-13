@@ -48,7 +48,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="24dp"
         android:background="@color/extra_light_gray"
-        app:layout_constraintBottom_toTopOf="@+id/textView24"
+        app:layout_constraintBottom_toTopOf="@+id/reedit"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -97,6 +97,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
+        android:visibility="invisible"
         android:id="@+id/divider1"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -112,7 +113,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
-        android:visibility="invisible"
+        android:visibility="visible"
         android:id="@+id/view4"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -128,7 +129,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <View
-        android:visibility="invisible"
+        android:visibility="visible"
         android:id="@+id/view5"
         android:layout_width="0dp"
         android:layout_height="1dp"
@@ -154,13 +155,13 @@
         app:layout_constraintLeft_toLeftOf="@+id/divider1" />
 
     <com.breadwallet.legacy.presenter.customviews.BaseTextView
-        android:id="@+id/textView24"
-        android:visibility="invisible"
+        android:id="@+id/reedit"
+        android:visibility="visible"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginBottom="24dp"
-        android:text="@string/About.blog"
+        android:text="Reedit"
         android:textSize="18sp"
         android:fontFamily="@font/mobile_font_book"
         app:layout_constraintBottom_toTopOf="@+id/view5"
@@ -176,38 +177,75 @@
         app:layout_constraintTop_toTopOf="@+id/textView22" />
 
     <ImageView
-        android:visibility="invisible"
-        android:id="@+id/blog_share_button"
+        android:visibility="visible"
+        android:id="@+id/reedit_button"
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/ic_share"
-        app:layout_constraintBottom_toBottomOf="@+id/textView24"
+        app:layout_constraintBottom_toBottomOf="@+id/reedit"
         app:layout_constraintRight_toRightOf="@+id/view5"
-        app:layout_constraintTop_toTopOf="@+id/textView24" />
+        app:layout_constraintTop_toTopOf="@+id/reedit" />
 
-    <com.breadwallet.legacy.presenter.customviews.BaseTextView
+    <LinearLayout
+        android:orientation="vertical"
         android:id="@+id/policy_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="16dp"
-        android:alpha="0.8"
-        android:text="@string/About.privacy"
-        android:textColor="@color/dark_blue"
-        android:textSize="16sp"
-        android:fontFamily="@font/mobile_font_book"
         app:layout_constraintBottom_toTopOf="@+id/info_text"
         app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.breadwallet.legacy.presenter.customviews.BaseTextView
+            android:id="@+id/policy_text_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="16dp"
+            android:alpha="0.8"
+            android:textAlignment="center"
+            android:text="@string/About.privacy"
+            android:textColor="@color/dark_blue"
+            android:textSize="16sp"
+            android:fontFamily="@font/mobile_font_book" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:autoLink="phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+1 800-797-1404     |"
+                android:gravity="center"
+                android:textColorLink="#FFFFFF"
+                android:textColor="#FFFFFF" />
+
+
+            <TextView
+                android:id="@+id/email"
+                android:textColorLink="#FFFFFF"
+                android:autoLink="email"
+                android:gravity="center"
+                android:text="     atm@coinsquare.com"
+                android:textColor="#FFFFFF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </LinearLayout>
+
 
     <com.breadwallet.legacy.presenter.customviews.BaseTextView
         android:id="@+id/info_text"
+        android:textAlignment="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
