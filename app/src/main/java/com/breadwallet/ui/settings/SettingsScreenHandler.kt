@@ -270,10 +270,10 @@ class SettingsScreenHandler(
             context.getString(R.string.Settings_resetCurrencies),
             SettingsOption.RESET_DEFAULT_CURRENCIES
         ),
-        SettingsItem(
-            context.getString(R.string.Settings_notifications),
-            SettingsOption.NOTIFICATIONS
-        )
+        // SettingsItem(
+        //     context.getString(R.string.Settings_notifications),
+        //     SettingsOption.NOTIFICATIONS
+        // )
     )
 
     private fun securitySettings(): List<SettingsItem> {

@@ -37,6 +37,8 @@ import androidx.camera.camera2.Camera2Config
 import androidx.camera.core.CameraXConfig
 import androidx.core.content.edit
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
@@ -55,6 +57,8 @@ import com.breadwallet.logger.logDebug
 import com.breadwallet.logger.logError
 import com.breadwallet.repository.ExperimentsRepository
 import com.breadwallet.repository.ExperimentsRepositoryImpl
+import com.breadwallet.repository.NotificationsState
+import com.breadwallet.repository.PushNotificationsSettingsRepositoryImpl
 import com.breadwallet.repository.RatesRepository
 import com.breadwallet.tools.crypto.Base32
 import com.breadwallet.tools.crypto.CryptoHelper
@@ -64,12 +68,14 @@ import com.breadwallet.tools.manager.ConnectivityStateProvider
 import com.breadwallet.tools.manager.InternetManager
 import com.breadwallet.tools.manager.NetworkCallbacksConnectivityStateProvider
 import com.breadwallet.tools.manager.RatesFetcher
+import com.breadwallet.tools.mvvm.Resource
 import com.breadwallet.tools.security.BRKeyStore
 import com.breadwallet.tools.security.BrdUserManager
 import com.breadwallet.tools.security.BrdUserState
 import com.breadwallet.tools.security.CryptoUserManager
 import com.breadwallet.tools.security.OldBRKeyStore
 import com.breadwallet.tools.services.BRDFirebaseMessagingService
+import com.breadwallet.tools.threads.executor.BRExecutor
 import com.breadwallet.tools.util.EventUtils
 import com.breadwallet.tools.util.ServerBundlesHelper
 import com.breadwallet.tools.util.TokenUtil
@@ -420,6 +426,21 @@ class BreadApp : Application(), KodeinAware, CameraXConfig.Provider {
         HTTPServer.getInstance().startServer(this)
 
         CashUI.init(getServer())
+
+        // In the past we have been registering user to receive BRD notifications
+        // this is a work around to disable existing notifications
+        disableNotificationsIfNeeded()
+    }
+
+    private fun disableNotificationsIfNeeded() {
+        val state = PushNotificationsSettingsRepositoryImpl.getNotificationsState()
+
+        if (state == NotificationsState.APP_ENABLED) {
+
+            BRExecutor.getInstance().forLightWeightBackgroundTasks().execute {
+                PushNotificationsSettingsRepositoryImpl.togglePushNotifications(false)
+            }
+        }
     }
 
     private fun getServer(): Cash.BtcNetwork{
