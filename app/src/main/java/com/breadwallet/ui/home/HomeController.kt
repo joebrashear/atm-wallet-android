@@ -176,7 +176,8 @@ class HomeController(
             if (prompt_container.childCount > 0) {
                 prompt_container.removeAllViews()
             }
-            if (showPrompt) {
+            // The Email collection will be disabled
+            if (showPrompt && promptId != PromptItem.EMAIL_COLLECTION) {
                 val promptView = getPromptView(promptId!!)
                 prompt_container.addView(promptView, 0)
             }

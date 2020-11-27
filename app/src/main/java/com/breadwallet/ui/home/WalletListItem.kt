@@ -56,11 +56,12 @@ class WalletListItem(
             val context = containerView.context
             val currencyCode = wallet.currencyCode
 
-            if (currencyCode.isBrd() && !BRSharedPrefs.getRewardsAnimationShown()) {
-                (containerView as ShimmerLayout).startShimmerAnimation()
-            } else {
-                (containerView as ShimmerLayout).stopShimmerAnimation()
-            }
+            // Shimmer animation will be disabled for BRD
+            // if (currencyCode.isBrd() && !BRSharedPrefs.getRewardsAnimationShown()) {
+            //     (containerView as ShimmerLayout).startShimmerAnimation()
+            // } else {
+            //     (containerView as ShimmerLayout).stopShimmerAnimation()
+            // }
 
             // Format numeric data
             val preferredFiatIso = BRSharedPrefs.getPreferredFiatIso()
