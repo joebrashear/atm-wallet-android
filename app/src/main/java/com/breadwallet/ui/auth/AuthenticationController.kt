@@ -128,7 +128,7 @@ class AuthenticationController(
         super.onAttach(view)
         when (mode) {
             Mode.PIN_REQUIRED -> {
-                pin_digits.setPinDigitViewResourceId(R.drawable.ic_pin_dot_empty_black)
+                pin_digits.setBaseResourceID(R.drawable.ic_pin_dot_empty_black)
                 pin_digits.setPinDotBackground(R.drawable.ic_pin_dot_filled_black)
                 pin_digits.setup(brkeyboard, object : PinLayout.PinLayoutListener {
                     override fun onPinInserted(pin: String?, isPinCorrect: Boolean) {
