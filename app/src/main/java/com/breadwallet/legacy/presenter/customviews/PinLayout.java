@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Handler;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IdRes;
 import androidx.annotation.Nullable;
 
 import android.util.AttributeSet;
@@ -108,6 +110,10 @@ public class PinLayout extends LinearLayout implements BRKeyboard.OnInsertListen
 
     }
 
+    public void setPinDotBackground(@DrawableRes int resource){
+        mPinDotBackground = resource;
+    }
+
     private void useNewDigitLimit(boolean useNewLimit) {
         View first = mPinDigitViewsAll.get(FIRST_INDEX);
         View last = mPinDigitViewsAll.get(SIXTH_INDEX);
@@ -134,7 +140,7 @@ public class PinLayout extends LinearLayout implements BRKeyboard.OnInsertListen
         }
     }
 
-    private void setPinDigitViewResourceId(int resId) {
+    public void setPinDigitViewResourceId(int resId) {
         for (View view : mPinDigitViews) {
             view.setBackgroundResource(resId);
         }
