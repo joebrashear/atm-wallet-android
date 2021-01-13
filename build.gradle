@@ -12,6 +12,9 @@ buildscript {
                 includeGroup "io.sweers.redacted"
             }
         }
+        maven {
+            url "https://just-cash-artifactory.s3.amazonaws.com"
+        }
     }
     dependencies {
         classpath "io.sweers.redacted:redacted-compiler-gradle-plugin:$redacted_version"
@@ -50,6 +53,8 @@ allprojects {
                 includeGroup "io.sweers.redacted"
             }
         }
-        maven { url 'https://jitpack.io' }
+        maven {
+            url "https://just-cash-artifactory.s3.amazonaws.com"
+        }
     }
 }
