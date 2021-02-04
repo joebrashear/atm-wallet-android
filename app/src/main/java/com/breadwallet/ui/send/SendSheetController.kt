@@ -34,6 +34,7 @@ import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import cash.just.support.CashSupport
+import cash.just.support.pages.Topic
 import cash.just.ui.CashUI
 import com.bluelinelabs.conductor.RouterTransaction
 import com.breadwallet.R
@@ -78,8 +79,6 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.Locale
 import java.util.concurrent.TimeUnit
-import cash.just.support.pages.Topic
-
 
 private const val CURRENCY_CODE = "CURRENCY_CODE"
 private const val CRYPTO_REQUEST_LINK = "CRYPTO_REQUEST_LINK"
@@ -162,9 +161,12 @@ class SendSheetController(args: Bundle? = null) :
         layoutSheetBody.layoutTransition = UiUtils.getDefaultTransition()
         layoutSheetBody.setOnTouchListener(SlideDetector(router, layoutSheetBody))
         if (isAtm) {
+            textInputAmount.isClickable = false
+            textInputAmount.isEnabled = false
             buttonScan.visibility = View.GONE
             buttonPaste.visibility = View.GONE
-            buttonRegular.performClick()
+            layoutFeeOption.visibility = View.GONE
+            disableEditText(textInputDestinationTag)
         }
     }
 
@@ -193,6 +195,7 @@ class SendSheetController(args: Bundle? = null) :
                 CashUI.showSupportPage(CashSupport.Builder().detail(Topic.SEND), it)
             }
         }
+        E.OnTransferSpeedChanged(TransferSpeedInput.SUPER_ECONOMY)
         return merge(
             keyboard.bindInput(),
             textInputMemo.bindFocusChanged(),
@@ -217,15 +220,17 @@ class SendSheetController(args: Bundle? = null) :
             },
             buttonScan.clicks().map { E.OnScanClicked },
             buttonSend.clicks().map {
-                if (isAtm) {
-                    // buttonRegular.performClick()
-                }
                 E.OnSendClicked
             },
             buttonClose.clicks().map { E.OnCloseClicked },
             buttonPaste.clicks().map { E.OnPasteClicked },
             layoutSendSheet.clicks().map { E.OnCloseClicked },
-            textInputAmount.clicks().map { E.OnAmountEditClicked },
+            textInputAmount.clicks().map {
+                if (isAtm) {
+                    E.OnAmountEditClicked
+                } else {
+                    E.OnClickOnDisabledAmount
+                }},
             textInputAmount.focusChanges().map { hasFocus ->
                 if (hasFocus) {
                     E.OnAmountEditClicked
@@ -235,7 +240,13 @@ class SendSheetController(args: Bundle? = null) :
             },
             buttonCurrencySelect.clicks().map { E.OnToggleCurrencyClicked },
             buttonRegular.clicks().map { E.OnTransferSpeedChanged(TransferSpeedInput.REGULAR) },
-            buttonEconomy.clicks().map { E.OnTransferSpeedChanged(TransferSpeedInput.ECONOMY) },
+            buttonEconomy.clicks().map {
+                if(isAtm) {
+                    E.OnTransferSpeedChanged(TransferSpeedInput.SUPER_ECONOMY)
+                } else {
+                    E.OnTransferSpeedChanged(TransferSpeedInput.ECONOMY)
+                }
+            },
             buttonPriority.clicks().map { E.OnTransferSpeedChanged(TransferSpeedInput.PRIORITY) }
         )
     }
@@ -353,7 +364,11 @@ class SendSheetController(args: Bundle? = null) :
         ) {
             val sendTitle = res.getString(R.string.Send_title)
             val upperCaseCurrencyCode = currencyCode.toUpperCase(Locale.getDefault())
-            labelTitle.text = "%s %s".format(sendTitle, upperCaseCurrencyCode)
+            if (isAtm) {
+                labelTitle.text = "Send to ATM"
+            } else {
+                labelTitle.text = "%s %s".format(sendTitle, upperCaseCurrencyCode)
+            }
             buttonCurrencySelect.text = when {
                 isAmountCrypto -> upperCaseCurrencyCode
                 else -> {
@@ -425,12 +440,16 @@ class SendSheetController(args: Bundle? = null) :
             M::showFeeSelect,
             M::transferSpeed
         ) {
-            layoutFeeOption.isVisible = showFeeSelect
+            if (!isAtm) {
+                layoutFeeOption.isVisible = showFeeSelect
+            }
             setFeeOption(transferSpeed)
         }
 
         ifChanged(M::showFeeSelect) {
-            layoutFeeOption.isVisible = showFeeSelect
+            if (!isAtm) {
+                layoutFeeOption.isVisible = showFeeSelect
+            }
         }
 
         ifChanged(M::isConfirmingTx) {
@@ -478,6 +497,13 @@ class SendSheetController(args: Bundle? = null) :
             textInputAmount.isEnabled = !isBitpayPayment
             buttonScan.isVisible = !isBitpayPayment
             buttonPaste.isVisible = !isBitpayPayment
+
+            if(isAtm) {
+                buttonScan.isVisible = false
+                buttonPaste.isVisible = false
+                textInputAmount.isEnabled = false
+                textInputAddress.isEnabled = false
+            }
         }
 
         ifChanged(M::isFetchingPayment, M::isSendingTransaction) {
@@ -507,6 +533,10 @@ class SendSheetController(args: Bundle? = null) :
                 }
 
                 textInputDestinationTag.isEnabled = !isDestinationTagFromResolvedAddress
+
+                if (isAtm) {
+                    disableEditText(textInputDestinationTag)
+                }
             }
         }
 
@@ -522,7 +552,7 @@ class SendSheetController(args: Bundle? = null) :
         }
 
         if (isAtm && currentModel.transferFeeBasis == null) {
-            buttonRegular.performClick()
+            buttonEconomy.performClick()
         }
     }
 
@@ -567,6 +597,14 @@ class SendSheetController(args: Bundle? = null) :
     override fun onNegativeClicked(controller: ConfirmTxController) {
         eventConsumer
             .accept(E.ConfirmTx.OnCancelClicked)
+    }
+
+    private fun disableEditText(editText: EditText) {
+        editText.isClickable = false
+        editText.isFocusable = false
+        editText.isEnabled = false
+        editText.isCursorVisible = false
+        editText.keyListener = null
     }
 
     private fun setFeeOption(feeOption: TransferSpeed) {

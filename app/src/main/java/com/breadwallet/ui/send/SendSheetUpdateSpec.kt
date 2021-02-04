@@ -57,6 +57,7 @@ interface SendSheetUpdateSpec {
         is SendSheet.E.ConfirmTx -> confirmTx(model, event)
         is SendSheet.E.OnAddressValidated -> onAddressValidated(model, event)
         is SendSheet.E.PaymentProtocol -> paymentProtocol(model, event)
+        is SendSheet.E.OnClickOnDisabledAmount -> onToggleCurrencyClicked(model)
     }
 
     fun onNetworkFeeError(model: SendSheet.M): Next<SendSheet.M, SendSheet.F>

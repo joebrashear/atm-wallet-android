@@ -357,6 +357,7 @@ object SendSheetUpdate : Update<M, E, F>, SendSheetUpdateSpec {
         event: E.OnTransferSpeedChanged
     ): Next<M, F> {
         val transferSpeed = when(event.transferSpeed) {
+            TransferSpeedInput.SUPER_ECONOMY -> TransferSpeed.SuperEconomy(model.currencyCode)
             TransferSpeedInput.ECONOMY -> TransferSpeed.Economy(model.currencyCode)
             TransferSpeedInput.REGULAR -> TransferSpeed.Regular(model.currencyCode)
             TransferSpeedInput.PRIORITY -> TransferSpeed.Priority(model.currencyCode)

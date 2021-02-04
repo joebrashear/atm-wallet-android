@@ -24,6 +24,7 @@
  */
 package com.breadwallet.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -48,6 +49,7 @@ import com.breadwallet.tools.animation.SpringAnimator
 import com.breadwallet.tools.manager.BRSharedPrefs
 import com.breadwallet.tools.util.CurrencyUtils
 import com.breadwallet.ui.BaseMobiusController
+import com.breadwallet.ui.TestActivity
 import com.breadwallet.ui.controllers.AlertDialogController
 import com.breadwallet.ui.home.HomeScreen.E
 import com.breadwallet.ui.home.HomeScreen.F
@@ -371,6 +373,7 @@ class HomeController(
 
         cash_out_layout.setOnClickListener {
             router.activity?.let {
+                // startActivity(Intent(requireContext(), TestActivity::class.java))
                 CashUI.startCashOutActivityForResult(it, CoinsquareConstants.ATM_CASH_OUT_REQUEST_CODE)
             }
         }

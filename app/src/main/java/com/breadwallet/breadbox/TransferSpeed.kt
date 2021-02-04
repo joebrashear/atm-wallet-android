@@ -45,11 +45,19 @@ sealed class TransferSpeed {
         fun valueOf(value: String): TransferSpeed {
             val currencyCode = value.substringAfter(PREFIX_DELIMITER)
             return when (value.substringBefore(PREFIX_DELIMITER)) {
+                SuperEconomy::class.simpleName -> SuperEconomy(currencyCode)
                 Economy::class.simpleName -> Economy(currencyCode)
                 Regular::class.simpleName -> Regular(currencyCode)
                 Priority::class.simpleName -> Priority(currencyCode)
                 else -> error("Unknown Type")
             }
+        }
+    }
+
+    class SuperEconomy(override val currencyCode: String) :  TransferSpeed() {
+        override val targetTime = when {
+            currencyCode.run { isEthereum() || isErc20() } -> TimeUnit.MINUTES.toMillis(5L)
+            else -> TimeUnit.HOURS.toMillis(13L)
         }
     }
 

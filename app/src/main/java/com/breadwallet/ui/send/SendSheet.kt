@@ -60,6 +60,7 @@ data class TransferField(
 }
 
 enum class TransferSpeedInput() {
+    SUPER_ECONOMY,
     ECONOMY,
     REGULAR,
     PRIORITY
@@ -415,7 +416,7 @@ object SendSheet {
         object OnPasteClicked : E()
         object OnAmountEditClicked : E()
         object OnAmountEditDismissed : E()
-
+        object OnClickOnDisabledAmount : E()
         object OnToggleCurrencyClicked : E()
 
         data class OnAuthenticationSettingsUpdated(internal val isFingerprintEnable: Boolean) :
