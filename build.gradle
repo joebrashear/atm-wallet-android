@@ -21,6 +21,18 @@ buildscript {
     }
 }
 
+plugins {
+  id "org.sonarqube" version "3.1.1"
+}
+
+sonarqube {
+  properties {
+    property "sonar.projectKey", "joebrashear_atm-wallet-android"
+    property "sonar.organization", "joebrashear"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
+}
+
 allprojects {
     repositories {
         exclusiveContent {
